@@ -39,14 +39,14 @@ def process_sam(sam_filename):
                 # calculation the match base
                 match = sum(map(int, re.findall(r'\d+', md_tag)))
 
-                #Pysam module recognition of the length of the query alignment section is to identify the mapping length of the query in ref.
+                #Pysam's recognition of the length of the query alignment section is to identify the mapping length of the query in ref.
                 #i.e,query_alignment_length = query_alignment_end - query_alignment_start. You can visualize this alignment by sam2pairwirse tool.
                 length = record.query_alignment_length   
                 
                 try:
                     ident = match / length
                     if ident > args.identity:
-                        filter_read = "@"+str(record.query_name)+"\n"+str(record.query)+"\n"+"+"+"\n"+str(record.qqual)
+                        filter_read = "@"+str(record.query_name)+"\n"+str(record.seq)+"\n"+"+"+"\n"+str(record.qual)
                         filter_hub.append(filter_read)
 
                         filter_ident = str(record.query_name) + "\t" + str(record.reference_name) + "\t" + str(ident)+"\t" + str(record.cigarstring) + "\t" +str(md_tag)
